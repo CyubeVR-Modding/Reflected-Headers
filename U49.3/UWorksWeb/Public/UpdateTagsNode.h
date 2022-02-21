@@ -1,0 +1,25 @@
+#pragma once
+#include "CoreMinimal.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=Engine -ObjectName=BlueprintAsyncActionBase -FallbackName=BlueprintAsyncActionBase
+#include "UpdateTagsDelegateDelegate.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=UWorks -ObjectName=UWorksPublishedFileID -FallbackName=UWorksPublishedFileID
+#include "UpdateTagsNode.generated.h"
+
+class UUpdateTagsNode;
+
+UCLASS()
+class UWORKSWEB_API UUpdateTagsNode : public UBlueprintAsyncActionBase {
+    GENERATED_BODY()
+public:
+    UPROPERTY(BlueprintAssignable)
+    FUpdateTagsDelegate Completed;
+    
+    UUpdateTagsNode();
+    UFUNCTION(BlueprintCallable)
+    static UUpdateTagsNode* UpdateTagsNode(const FString& Key, FUWorksPublishedFileID PublishedFileID, int32 AppID, TArray<FString> AddTags, TArray<FString> RemoveTags);
+    
+    UFUNCTION()
+    void OnRequestCompleted(bool bSuccessful, const FString& Content);
+    
+};
+

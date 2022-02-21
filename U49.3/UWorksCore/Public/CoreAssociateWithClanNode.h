@@ -1,0 +1,26 @@
+#pragma once
+#include "CoreMinimal.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=Engine -ObjectName=BlueprintAsyncActionBase -FallbackName=BlueprintAsyncActionBase
+#include "AssociateWithClanDelegateDelegate.h"
+#include "EUWorksResult.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=UWorks -ObjectName=UWorksSteamID -FallbackName=UWorksSteamID
+#include "CoreAssociateWithClanNode.generated.h"
+
+class UCoreAssociateWithClanNode;
+
+UCLASS()
+class UWORKSCORE_API UCoreAssociateWithClanNode : public UBlueprintAsyncActionBase {
+    GENERATED_BODY()
+public:
+    UPROPERTY(BlueprintAssignable)
+    FAssociateWithClanDelegate Completed;
+    
+    UCoreAssociateWithClanNode();
+    UFUNCTION()
+    void OnRequestCompleted(bool bSuccessful, EUWorksResult Result);
+    
+    UFUNCTION(BlueprintCallable)
+    static UCoreAssociateWithClanNode* AssociateWithClanNode(FUWorksSteamID SteamIDClan);
+    
+};
+
