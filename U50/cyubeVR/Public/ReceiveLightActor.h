@@ -1,0 +1,55 @@
+#pragma once
+#include "CoreMinimal.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=Engine -ObjectName=Actor -FallbackName=Actor
+#include "LightReceiveInterface.h"
+//CROSS-MODULE INCLUDE V2: -ModuleName=CoreUObject -ObjectName=Vector -FallbackName=Vector
+#include "ReceiveLightActor.generated.h"
+
+class UMeshComponent;
+class UMaterialInstanceDynamic;
+
+UCLASS(Abstract)
+class CYUBEVR_API AReceiveLightActor : public AActor, public ILightReceiveInterface {
+    GENERATED_BODY()
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool InitLightImmediate;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseLightAroundValue;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Export, meta=(AllowPrivateAccess=true))
+    TArray<UMeshComponent*> LightReceiveMeshes;
+    
+    AReceiveLightActor();
+    UFUNCTION(BlueprintCallable)
+    bool UseLightAroundValue();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetLightReceiveMeshes(TArray<UMeshComponent*> NewMeshes);
+    
+    UFUNCTION(BlueprintCallable)
+    FVector ManualTickLight(UMaterialInstanceDynamic* DynamicMaterial);
+    
+    UFUNCTION(BlueprintCallable)
+    TArray<UMeshComponent*> GetMeshComponents();
+    
+    
+    // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable)
+    bool UseActorCustomLocation() override PURE_VIRTUAL(UseActorCustomLocation, return false;);
+    
+    UFUNCTION(BlueprintCallable)
+    bool TickReceiveLight() override PURE_VIRTUAL(TickReceiveLight, return false;);
+    
+    UFUNCTION(BlueprintCallable)
+    void LightInterfaceBeginPlay(AActor* ThisActor) override PURE_VIRTUAL(LightInterfaceBeginPlay,);
+    
+    UFUNCTION(BlueprintCallable)
+    void LightInterfaceBeginDestroy(AActor* ThisActor) override PURE_VIRTUAL(LightInterfaceBeginDestroy,);
+    
+    UFUNCTION(BlueprintCallable)
+    FVector GetActorCustomLocation() override PURE_VIRTUAL(GetActorCustomLocation, return FVector{};);
+    
+};
+
