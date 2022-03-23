@@ -1,0 +1,19 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "SocialChatChannel.h"
+#include "SocialPrivateMessageChannel.generated.h"
+
+class USocialUser;
+
+UCLASS()
+class PARTY_API USocialPrivateMessageChannel : public USocialChatChannel {
+    GENERATED_BODY()
+public:
+private:
+    UPROPERTY(BlueprintReadWrite, meta=(AllowPrivateAccess=true))
+    USocialUser* TargetUser;
+    
+public:
+    USocialPrivateMessageChannel();
+};
+
